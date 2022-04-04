@@ -121,13 +121,11 @@ export default function App() {
             <Text style={{fontSize: 34}}>{time}</Text>
             <Text style={{fontSize: 12, color: '#ccc'}}>ms</Text>
           </View>
-          <TouchableOpacity style={{flex: 1 }} onPress={copyText}>
             <ScrollView contentContainerStyle={{padding: 10}} style={modalStyles.console}>
               {logs.map(log => {
                 return <Text key={log + new Date().toISOString()}>{log}</Text>
               })}
             </ScrollView>
-          </TouchableOpacity>
           <TouchableOpacity onPress={() => dismissModal()} style={{...styles.loginButton, backgroundColor: '#ff0000'}}>
             <Text style={{color: '#fff', fontWeight:"bold"}}>Test Login</Text>
           </TouchableOpacity>
