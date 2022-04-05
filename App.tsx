@@ -47,7 +47,7 @@ export default function App() {
   const [modalShown, setModalShown] = useState(false);
   const [logs, setLogs] = useState([] as string[]);
   const [legacy, setLegacy] = useState(true);
-  const logRef = useRef({} as never);
+  const logRef = useRef({} as any);
 
   const changeValue = useCallback((field: string, value: string) => {
     setLoginValues((prevState: LoginModel) => {
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   textInput: {
     padding: 10,
     width: '90%',
-    marginVertical: 25,
+    marginVertical: 15,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: '#ccc',

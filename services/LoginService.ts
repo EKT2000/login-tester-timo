@@ -40,13 +40,12 @@ export class LoginService {
                 return prevState;
             })
         } else {
-            response = await axios.post(serverURL + "services/rest/auth/checkLoginNew", null,{
-                data: JSON.stringify({
-                    username: model.username,
-                    password: model.password,
-                    company: model.company,
-                    pushNotificationToken: ""
-                }),
+            response = await axios.post(serverURL + "services/rest/auth/checkLoginNew", {
+                username: model.username,
+                password: model.password,
+                company: model.company,
+                pushNotificationToken: ""
+            },{
                 headers: {
                     'content-type': "application/json"
                 },
