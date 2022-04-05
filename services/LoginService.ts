@@ -1,20 +1,23 @@
 import {LoginModel} from "../App";
 import axios, {AxiosResponse} from "axios";
-import React, {useReducer} from "react";
+import React from "react";
 
 export class LoginService {
 
-    private timoBase = "https://timo24.de";
+    private timoBase = "https://timo24.com";
 
-    public async loginUser(model: LoginModel, setLog: React.Dispatch<React.SetStateAction<string[]>>, legacy: boolean) {
+
+    public async findServer(model: LoginModel, setLog: React.Dispatch<React.SetStateAction<string[]>>) {
         const adminResponse = await axios.get(this.timoBase + "/timoadmin/login?f=" + model.company);
         setLog((prevState: string[]) => {
             prevState.push("[" + new Date().toISOString() + "]" + JSON.stringify(adminResponse));
             return prevState;
         })
-        const serverURL = adminResponse.data.replace(/\s/g, "");
-        let response : AxiosResponse;
-        console.log(legacy)
+        return adminResponse.data.replace(/\s/g, "");
+    }
+
+    public async loginUser(model: LoginModel, setLog: React.Dispatch<React.SetStateAction<string[]>>, legacy: boolean, serverURL: string) {
+        let response : AxiosResponse | boolean;
         if (legacy) {
             const fd = new FormData();
             fd.append("username", "admin");
@@ -23,17 +26,21 @@ export class LoginService {
             fd.append("pushNotificationToken", 'f');
             const formString = "username=" + model.username + "&company=" + model.company
                 + "&password=" + model.password;
-            console.log(formString)
-            console.log(serverURL + "/services/rest/auth/checkLogin")
             response = await axios.post(serverURL + "services/rest/auth/checkLogin", formString, {
                 headers: {'content-type': "application/x-www-form-urlencoded"},
+            }).catch((e) => {
+                setLog((prevState: string[]) => {
+                    prevState.push("[" + new Date().toISOString() + "]" + JSON.stringify(e));
+                    return prevState;
+                })
+                return false;
             })
             setLog((prevState: string[]) => {
                 prevState.push("[" + new Date().toISOString() + "]" + JSON.stringify(response));
                 return prevState;
             })
         } else {
-            response = await axios.post(serverURL + "services/rest/auth/checkLoginNew", {
+            response = await axios.post(serverURL + "services/rest/auth/checkLoginNew", null,{
                 data: JSON.stringify({
                     username: model.username,
                     password: model.password,
@@ -43,6 +50,12 @@ export class LoginService {
                 headers: {
                     'content-type': "application/json"
                 },
+            }).catch(e => {
+                setLog((prevState: string[]) => {
+                    prevState.push("[" + new Date().toISOString() + "]" + JSON.stringify(e));
+                    return prevState;
+                })
+                return false;
             })
             setLog((prevState: string[]) => {
                 prevState.push("[" + new Date().toISOString() + "]" + JSON.stringify(response));
