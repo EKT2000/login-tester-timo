@@ -47,7 +47,7 @@ export default function App() {
   const [modalShown, setModalShown] = useState(false);
   const [logs, setLogs] = useState([] as string[]);
   const [legacy, setLegacy] = useState(true);
-  const logRef = useRef({} as any);
+  const logRef = useRef({} as never);
 
   const changeValue = useCallback((field: string, value: string) => {
     setLoginValues((prevState: LoginModel) => {
@@ -101,6 +101,7 @@ export default function App() {
     setModalShown(false);
     setDiffTotal(0);
     setDiffCompany(0)
+    setDiffLogin(0)
   }, [])
 
   return (
