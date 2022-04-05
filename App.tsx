@@ -14,6 +14,7 @@ import {KeyboardHook} from "./hooks/KeyboardHook";
 import {LoginService} from "./services/LoginService";
 import React from "react";
 import dayjs from "dayjs";
+import * as Updates from 'expo-updates';
 
 export interface LoginModel {
   username: string,
@@ -48,6 +49,23 @@ export default function App() {
   const [logs, setLogs] = useState([] as string[]);
   const [legacy, setLegacy] = useState(true);
   const logRef = useRef({} as any);
+
+  useEffect( () => {
+    const update = async () => {
+      try {
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          // ... notify user of update ...
+          await Updates.reloadAsync();
+        }
+      } catch (e) {
+        // handle or log error
+      }
+    }
+
+    update().then(r => r);
+  }, [])
 
   const changeValue = useCallback((field: string, value: string) => {
     setLoginValues((prevState: LoginModel) => {

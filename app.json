@@ -1,5 +1,6 @@
 {
   "expo": {
+    "runtimeVersion": "2.718",
     "name": "login-tester-timo",
     "slug": "login-tester-timo",
     "version": "1.0.0",
@@ -11,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url":"https://u.expo.dev/11b26d2a-a175-4772-92c8-bb9292920eb3"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -28,6 +30,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-updates"
+    ]
   }
 }
