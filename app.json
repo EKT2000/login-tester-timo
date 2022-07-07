@@ -1,6 +1,6 @@
 {
   "expo": {
-    "runtimeVersion": "2.718",
+    "runtimeVersion": "exposdk:45.0.0",
     "name": "login-tester-timo",
     "slug": "login-tester-timo",
     "version": "1.0.0",
