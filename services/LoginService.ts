@@ -17,6 +17,7 @@ export class LoginService {
     }
 
     public async loginUser(model: LoginModel, setLog: React.Dispatch<React.SetStateAction<string[]>>, legacy: boolean, serverURL: string) {
+        setLog([]);
         let response : AxiosResponse | boolean;
         if (legacy) {
             const fd = new FormData();
